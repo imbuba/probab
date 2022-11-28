@@ -22,11 +22,12 @@ func meanSd(data []float64) (mean, sd float64) {
 }
 
 // cols2vec unloads complete matrix y columnwise to vector v.
+//nolint:unused
 func cols2vec(y [][]float64) []float64 {
 	v := make([]float64, len(y)*len(y[0]))
 	col := 0
-	for j, _ := range y[0] {
-		for i, _ := range y {
+	for j := range y[0] {
+		for i := range y {
 			v[col] = y[i][j]
 			col++
 		}
@@ -44,7 +45,7 @@ func linInt(x, y []float64, xVal float64) float64 {
 
 	// find out which segment we are in
 	n := 0
-	for i, _ := range x {
+	for i := range x {
 		if xVal > x[i] {
 			n = i
 		} else {

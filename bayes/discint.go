@@ -12,7 +12,7 @@ import (
 // cumSum returns cumulative sums of a slice.
 func cumSum(x []float64) []float64 {
 	v := make([]float64, len(x))
-	for i, _ := range x {
+	for i := range x {
 		if i == 0 {
 			v[i] = x[i]
 		} else {
@@ -41,7 +41,7 @@ func (s IndexSorter) Swap(i, j int) {
 	s.Indices[i], s.Indices[j] = s.Indices[j], s.Indices[i]
 }
 
-// DiscHPI computes a highest probability interval for a discrete distribution.  
+// DiscHPI computes a highest probability interval for a discrete distribution.
 func DiscHPI(x, p []float64, probContent float64) (probExact float64, hpiSet []float64) {
 	// Arguments:
 	// x - values where probability is listed
@@ -57,19 +57,19 @@ func DiscHPI(x, p []float64, probContent float64) (probExact float64, hpiSet []f
 
 	// reverse sorted indices
 	iRev := make([]int, len(ix))
-	for i, _ := range ix {
+	for i := range ix {
 		iRev[i] = ix[len(ix)-i-1]
 	}
 
 	// reverse sorted probabilities
 	pRev := make([]float64, len(ps))
-	for i, _ := range ps {
+	for i := range ps {
 		pRev[i] = ps[len(ps)-i-1]
 	}
 
 	// sort x
 	xRev := make([]float64, len(iRev))
-	for i, _ := range xRev {
+	for i := range xRev {
 		xRev[i] = x[iRev[i]]
 	}
 
@@ -77,7 +77,7 @@ func DiscHPI(x, p []float64, probContent float64) (probExact float64, hpiSet []f
 
 	// find first index where cp>=probContent
 	j := 0
-	for i, _ := range cp {
+	for i := range cp {
 		if cp[i] >= probContent {
 			break
 		}

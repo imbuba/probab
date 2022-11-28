@@ -22,7 +22,7 @@ func BetaBinExch(theta1, theta2 float64, y, n []float64) float64 {
 	eta := exp(theta1) / (1 + exp(theta1))
 	k := exp(theta2)
 	val := 0.0
-	for i, _ := range y {
+	for i := range y {
 		val += logB(y[i], n[i], k, eta)
 	}
 	val += theta2 - 2*log(1+exp(theta2))
@@ -42,7 +42,7 @@ func BetaBinExch0(theta1, theta2 float64, y, n []float64) float64 {
 	eta := theta1
 	k := theta2
 	val := 0.0
-	for i, _ := range y {
+	for i := range y {
 		val += logB(y[i], n[i], k, eta)
 	}
 	val += -2*log(1+k) - log(eta) - log(1-eta)

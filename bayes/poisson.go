@@ -6,8 +6,8 @@
 package bayes
 
 import (
-	. "code.google.com/p/probab/dst"
-	//	. "code.google.com/p/go-fn/fn"
+	. "github.com/imbuba/probab/dst"
+	//	. "github.com/imbuba/go-fn/fn"
 	"math"
 )
 
@@ -162,13 +162,13 @@ func PoissonLambdaLike(sumK, n int64, λ float64) float64 {
 
 }
 
-// Equivalent sample size of the prior 
+// Equivalent sample size of the prior
 // Bolstad 2007 (2e): Chapter 10, p. 187.
 func PoissonLambdaEqvSize(v float64) float64 {
 	return (math.Floor(v))
 }
 
-// Posterior mean 
+// Posterior mean
 // Bolstad 2007 (2e): Chapter 10, p. 190-191.
 func PoissonLambdaPostMean(sumK, n int64, r, v float64) float64 {
 	r1 := float64(sumK) + 1.0

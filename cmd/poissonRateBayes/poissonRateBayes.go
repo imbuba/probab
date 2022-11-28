@@ -1,13 +1,14 @@
-// Summary of the posterior distribution of the Poisson parameter. 
+// Summary of the posterior distribution of the Poisson parameter.
 
 package main
 
 import (
-	"code.google.com/p/probab/bayes"
 	"fmt"
+
+	"github.com/imbuba/probab/bayes"
 )
 
-// Summary of the posterior distribution of the Poisson parameter. 
+// Summary of the posterior distribution of the Poisson parameter.
 func main() {
 	var (
 		x, n int64
@@ -22,10 +23,10 @@ func main() {
 	if r < 0 || v < 0 {
 		panic("Shape parameter r and rate parameter v must be greater than or equal to zero")
 	}
-	fmt.Println("\nProb.\t\tQuantile \n")
+	fmt.Println("\nProb.\t\tQuantile")
 	for i := 0; i < 9; i++ {
 		qtl := bayes.PoissonLambdaQtlGPri(x, n, r, v)
 		fmt.Println(pr[i], "\t\t", qtl(pr[i]))
 	}
-	fmt.Println("\n")
+	fmt.Println()
 }

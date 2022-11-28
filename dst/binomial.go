@@ -2,14 +2,14 @@
 
 package dst
 
-// Binomial distribution. 
-// Parameters: 
+// Binomial distribution.
+// Parameters:
 // n ∈ N0	 	number of trials
 // p ∈ [0, 1]	probability of success in each trial
-// Support: 
+// Support:
 // k ∈ {0, ... , n}
 
-// BinomialPMF returns the PMF of the Binomial distribution. 
+// BinomialPMF returns the PMF of the Binomial distribution.
 func BinomialPMF(n int64, p float64) func(k int64) float64 {
 	return func(k int64) (x float64) {
 		// for big n use  Normal approximation when Decker and Fitzgibbon (1991) condition holds
@@ -25,7 +25,7 @@ func BinomialPMF(n int64, p float64) func(k int64) float64 {
 	}
 }
 
-// BinomialLnPMF returns the natural logarithm of the PMF of the Binomial distribution. 
+// BinomialLnPMF returns the natural logarithm of the PMF of the Binomial distribution.
 func BinomialLnPMF(n int64, p float64) func(k int64) float64 {
 	return func(k int64) (x float64) {
 		x = log(p)*float64(k) + log(1-p)*float64(n-k)
@@ -34,20 +34,20 @@ func BinomialLnPMF(n int64, p float64) func(k int64) float64 {
 	}
 }
 
-// BinomialPMFAt returns the value of PMF of Binomial distribution at k. 
+// BinomialPMFAt returns the value of PMF of Binomial distribution at k.
 func BinomialPMFAt(n int64, p float64, k int64) float64 {
 	pmf := BinomialPMF(n, p)
 	return pmf(k)
 }
 
-// BinomialCDF returns the CDF of the Binomial distribution. 
+// BinomialCDF returns the CDF of the Binomial distribution.
 func BinomialCDF(n int64, p float64) func(k int64) float64 {
 	return func(k int64) float64 {
 		return BetaCDFAt((float64)(n-k), (float64)(k+1), 1-p)
 	}
 }
 
-// BinomialCDFAt returns the value of CDF of the Binomial distribution, at k. 
+// BinomialCDFAt returns the value of CDF of the Binomial distribution, at k.
 func BinomialCDFAt(n int64, p float64, k int64) float64 {
 	cdf := BinomialCDF(n, p)
 	return cdf(k)
@@ -72,7 +72,7 @@ func BinomialQtl(n int64, ρ float64) func(p float64) int64 {
 
 		q = 1 - ρ
 		if q == 0 {
-			return n // covers the full range of the distribution 
+			return n // covers the full range of the distribution
 		}
 		mu = float64(n) * ρ
 		sigma = sqrt(float64(n) * ρ * q)
@@ -87,7 +87,7 @@ func BinomialQtl(n int64, ρ float64) func(p float64) int64 {
 		z = NormalQtlFor(0, 1, p)
 		y = int64(floor(mu + sigma*(z+gamma*(z*z-1)/6) + 0.5))
 
-		if y > n { // way off  
+		if y > n { // way off
 			y = n
 		}
 		z = BinomialCDFAt(n, ρ, y)
@@ -98,7 +98,7 @@ func BinomialQtl(n int64, ρ float64) func(p float64) int64 {
 		if y < 1e5 {
 			return searchBinomial(p, ρ, y, n, 1, &z)
 		}
-		// Otherwise be a bit cleverer in the search 
+		// Otherwise be a bit cleverer in the search
 		{
 			incr := int64(floor(float64(n) / 1000))
 			oldincr := incr
@@ -118,7 +118,7 @@ func BinomialQtlFor(n int64, ρ, p float64) int64 {
 	return qtl(p)
 }
 
-// BinomialNext returns random number drawn from the Binomial distribution. 
+// BinomialNext returns random number drawn from the Binomial distribution.
 func BinomialNext(n int64, p float64) (x int64) {
 	x = 0
 	for i := int64(0); i <= n; i++ {
@@ -127,22 +127,22 @@ func BinomialNext(n int64, p float64) (x int64) {
 	return
 }
 
-// Binomial returns the random number generator with  Binomial distribution. 
+// Binomial returns the random number generator with  Binomial distribution.
 func Binomial(n int64, p float64) func() int64 {
 	return func() int64 { return BinomialNext(n, p) }
 }
 
-// BinomialMean returns the mean of the Binomial distribution. 
+// BinomialMean returns the mean of the Binomial distribution.
 func BinomialMean(n int64, p float64) float64 {
 	return float64(n) * p
 }
 
-// BinomialMedian returns the median of the Binomial distribution. 
+// BinomialMedian returns the median of the Binomial distribution.
 func BinomialMedian(n int64, p float64) float64 {
 	return floor(float64(n) * p)
 }
 
-// BinomialMode returns the mode of the Binomial distribution. 
+// BinomialMode returns the mode of the Binomial distribution.
 func BinomialMode(n int64, p float64) float64 {
 	ε := 1e-3 // some small number
 	switch {
@@ -156,32 +156,32 @@ func BinomialMode(n int64, p float64) float64 {
 	return float64(n+1) * p // (n+1)*p is integer
 }
 
-// BinomialVar returns the variance of the Binomial distribution. 
+// BinomialVar returns the variance of the Binomial distribution.
 func BinomialVar(n int64, p float64) float64 {
 	return float64(n) * p * (1 - p)
 }
 
-// BinomialStd returns the standard deviation of the Binomial distribution. 
+// BinomialStd returns the standard deviation of the Binomial distribution.
 func BinomialStd(n int64, p float64) float64 {
 	return sqrt(float64(n) * p * (1 - p))
 }
 
-// BinomialSkew returns the skewness of the Binomial distribution. 
+// BinomialSkew returns the skewness of the Binomial distribution.
 func BinomialSkew(n int64, p float64) float64 {
 	return 1 - 2*p/sqrt(float64(n)*p*(1-p))
 }
 
-// BinomialExKurt returns the excess kurtosis of the Binomial distribution. 
+// BinomialExKurt returns the excess kurtosis of the Binomial distribution.
 func BinomialExKurt(n int64, p float64) float64 {
 	return 1 - 6*p*(1-p)/(float64(n)*p*(1-p))
 }
 
-// BinomialMGF returns the moment-generating function of the Binomial distribution. 
+// BinomialMGF returns the moment-generating function of the Binomial distribution.
 func BinomialMGF(n int64, p, t float64) float64 {
 	return pow((1 - p + p*exp(t)), float64(n))
 }
 
-// BinomialPGF returns the probability-generating function of the Binomial distribution. 
+// BinomialPGF returns the probability-generating function of the Binomial distribution.
 func BinomialPGF(n int64, p, z float64) float64 {
 	return pow((1 - p + p*z), float64(n))
 }
@@ -206,5 +206,4 @@ func searchBinomial(p, pr float64, y, n, incr int64, z *float64) int64 {
 			}
 		}
 	}
-	return y // just to make compiler happy ;-)
 }

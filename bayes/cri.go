@@ -1,15 +1,15 @@
-// Bayesian credible interval. 
+// Bayesian credible interval.
 
 package bayes
 
 /*
 import (
-	. "code.google.com/p/probab/dst"
+	. "github.com/imbuba/probab/dst"
 	"math"
 )
 */
 
-// Bayesian credible interval for (analytical) quantile function 
+// Bayesian credible interval for (analytical) quantile function
 func CrI(α float64, qtl func(𝛩 float64) float64) (hi, lo float64) {
 	p := (1 - α)
 	lo = qtl(p / 2)

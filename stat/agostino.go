@@ -3,26 +3,27 @@
 package stat
 
 // D’Agostino test for skewness in normally distributed data.
-// Ref.: D’Agostino (1970). 
+// Ref.: D’Agostino (1970).
 
 import (
-	"code.google.com/p/probab/dst"
 	"sort"
+
+	"github.com/imbuba/probab/dst"
 )
 
 // Agostino performs D’Agostino test for skewness in normally distributed data vector.
 func Agostino(x []float64, alternative int) (skew, z, pVal float64) {
-	// Arguments: 
+	// Arguments:
 	// x - vector of observations
 	// alternative - 0 = "twoSided", 1 = "less", 2 = "greater"
 	//
-	// Details: 
+	// Details:
 	// Under the hypothesis of normality, data should be symmetrical (i.e. skewness should be equal to
 	// zero). This test has such null hypothesis and is useful to detect a significant skewness in normally
 	// distributed data.
 	//
-	// Returns: 
-	// skew - skewness estimator 
+	// Returns:
+	// skew - skewness estimator
 	// z - its transformation
 	// pVal - the p-value for the test.
 

@@ -10,7 +10,7 @@ import (
 	"math/rand"
 )
 
-// PoissonNext returns random number drawn from the Poisson distribution. 
+// PoissonNext returns random number drawn from the Poisson distribution.
 func PoissonNext(λ float64) int64 {
 	const (
 		a0     = -0.5
@@ -31,10 +31,11 @@ func PoissonNext(λ float64) int64 {
 		p0, p, q, s, d, omega           float64
 		big_l                           float64 // integer "w/o overflow"
 		del, fx, fy, g, px, py, t, v, x float64
+		muprev, muprev2                 float64
 		m, l, k                         int
 	)
 
-	// Factorial Table (0:9)! 
+	// Factorial Table (0:9)!
 	fact := []float64{1., 1., 2., 6., 24., 120., 720., 5040., 40320., 362880.}
 	pp := make([]float64, 36)
 	difmuk := 0.0
@@ -52,14 +53,10 @@ func PoissonNext(λ float64) int64 {
 		return 0
 	}
 
-	k = 0
 	kflag := false
 	big_mu := false
 	new_big_mu := false
 	stepF := false
-
-	muprev := 0.0
-	muprev2 := 0.0
 
 	if λ >= 10 {
 		big_mu = true
@@ -120,7 +117,7 @@ func PoissonNext(λ float64) int64 {
 				}
 			}
 			// Step C. creation of new poisson
-			//   probabilities p[l..] and their cumulatives q =: pp[k] 
+			//   probabilities p[l..] and their cumulatives q =: pp[k]
 			l++
 			for k = l; k <= 35; k++ {
 				p *= λ / float64(k)
@@ -205,7 +202,7 @@ func PoissonNext(λ float64) int64 {
 			}
 			// Step_F:  calculation of px,py,fx,fy.
 
-			if pois < 10 { // use factorials from table fact[] 
+			if pois < 10 { // use factorials from table fact[]
 				px = -λ
 				py = pow(λ, pois) / fact[int(pois)]
 			} else {
@@ -216,7 +213,7 @@ func PoissonNext(λ float64) int64 {
 				v = difmuk / fk
 				if abs(v) <= 0.25 {
 					px = fk*v*v*(((((((a7*v+a6)*v+a5)*v+a4)*v+a3)*v+a2)*v+a1)*v+a0) - del
-				} else { // |v| > 1/4 
+				} else { // |v| > 1/4
 					px = fk*log(1.+v) - difmuk - del
 				}
 				py = M_1_SQRT_2PI / sqrt(fk)
@@ -239,8 +236,6 @@ func PoissonNext(λ float64) int64 {
 				}
 			}
 			stepF = false
-		} // t > -.67.. 
+		} // t > -.67..
 	}
-
-	return int64(pois)
 }

@@ -2,13 +2,14 @@
 
 package bayes
 
-// Bayes factor against independence in a 
+// Bayes factor against independence in a
 // 2-way contingency table using uniform priors.
 // Ref.: Albert (2009)
 
 import (
-	fn "code.google.com/p/go-fn/fn"
 	"math"
+
+	fn "github.com/imbuba/go-fn/fn"
 )
 
 func lDirich(a []float64) float64 {
@@ -43,9 +44,9 @@ func colSums(a [][]float64) []float64 {
 
 // FactCTableUnif returns the Bayes factor for testing independence in a contingency table.
 func FactCTableUnif(y, a [][]float64) float64 {
-	// Bayes factor against independence in a 
-	// 2-way contingency table using uniform priors, 
-	// where Y is a matrix containing the 2-way table of counts, 
+	// Bayes factor against independence in a
+	// 2-way contingency table using uniform priors,
+	// where Y is a matrix containing the 2-way table of counts,
 	// and A is a matrix of prior hyperparameters.
 
 	nRows := len(y)

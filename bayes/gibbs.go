@@ -3,14 +3,15 @@
 package bayes
 
 import (
-	"code.google.com/p/probab/dst"
 	"math/rand"
+
+	"github.com/imbuba/probab/dst"
 )
 
 /*
 
 gibbs=function(logpost,start,m,scale,...)
-{ 
+{
 p=length(start)
 vth=array(0,dim=c(m,p))
 f0=logpost(start,...)
@@ -27,7 +28,7 @@ for (i in 1:m)
   u=runif(1)<exp(f1-f0)
   th0[j]=th1[j]*(u==1)+th0[j]*(u==0)
   f0=f1*(u==1)+f0*(u==0)
-  vth[i,j]=th0[j]; 
+  vth[i,j]=th0[j];
   arate[j]=arate[j]+u
   }
 }
@@ -67,16 +68,12 @@ func Gibbs(logpost func([]float64) float64, start []float64, m int, scale []floa
 	arate = make([]float64, p)
 
 	th0 := make([]float64, p)
-	for i, val := range start {
-		th0[i] = val
-	}
+	copy(th0, start)
 
 	for i := 0; i < m; i++ {
 		for j := 0; j < p; j++ {
 			th1 := make([]float64, p)
-			for k, val := range th0 {
-				th1[k] = val
-			}
+			copy(th1, th0)
 
 			th1[j] = th0[j] + dst.NormalNext(0, 1)*scale[j]
 			f1 := logpost(th1)
@@ -93,7 +90,7 @@ func Gibbs(logpost func([]float64) float64, start []float64, m int, scale []floa
 		}
 	}
 
-	for i, _ := range arate {
+	for i := range arate {
 		arate[i] /= float64(m)
 	}
 	return

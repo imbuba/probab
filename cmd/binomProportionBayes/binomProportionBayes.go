@@ -1,13 +1,14 @@
-// Summary of the posterior distribution of the binomial parameter. 
+// Summary of the posterior distribution of the binomial parameter.
 package main
 
 import (
-	"code.google.com/p/probab/bayes"
 	"fmt"
 	"math"
+
+	"github.com/imbuba/probab/bayes"
 )
 
-// Summary of the posterior distribution of the binomial parameter. 
+// Summary of the posterior distribution of the binomial parameter.
 func main() {
 	var (
 		k, n int64
@@ -39,11 +40,11 @@ func main() {
 	fmt.Println("Posterior Mean           : ", bayes.BinomPiPostMean(a, b, n, k))
 	fmt.Println("Posterior Variance       : ", bayes.BinomPiPostVar(a, b, n, k))
 
-	fmt.Println("\nProb.\t\tQuantile \n")
+	fmt.Println("\nProb.\t\tQuantile")
 	for i := 0; i < 9; i++ {
 		qf := bayes.BinomPiQtlBPri(k, n, a, b)
 		qtl := qf(pr[i])
 		fmt.Println(pr[i], "\t\t", qtl)
 	}
-	fmt.Println("\n")
+	fmt.Println()
 }

@@ -6,21 +6,21 @@ package bayes
 // Ref.: Albert (2009)
 
 import (
-	"code.google.com/p/probab/dst"
+	"github.com/imbuba/probab/dst"
 )
 
 // LogPoissGamma returns the logarithm of the posterior density of a Poisson log mean with a gamma prior.
 func LogPoissGamma(theta, y []float64, sh, rt float64) []float64 {
 	// Arguments:
 	// theta - vector of values of the log mean parameter
-	// y - vector of observations, and 
+	// y - vector of observations, and
 	// sh, rt  -  shape and rate=1/scale parameters of the gamma prior
 
 	// Returns:
 	// logPosterior - vector of values of the log posterior for all values in theta
 
 	lambda := make([]float64, len(theta))
-	for i, _ := range lambda {
+	for i := range lambda {
 		lambda[i] = exp(theta[i])
 	}
 
@@ -33,17 +33,17 @@ func LogPoissGamma(theta, y []float64, sh, rt float64) []float64 {
 	scale := 1 / float64(len(y))
 
 	logLike := make([]float64, len(lambda))
-	for i, _ := range logLike {
+	for i := range logLike {
 		logLike[i] = dst.GammaLnPDFAt(shape, scale, lambda[i])
 	}
 
 	logPrior := make([]float64, len(theta))
-	for i, _ := range logPrior {
+	for i := range logPrior {
 		logPrior[i] = dst.GammaLnPDFAt(sh, 1/(rt*lambda[i]), lambda[i])
 	}
 
 	logPosterior := make([]float64, len(logPrior))
-	for i, _ := range logPrior {
+	for i := range logPrior {
 		logPosterior[i] = logLike[i] + logPrior[i]
 	}
 	return logPosterior

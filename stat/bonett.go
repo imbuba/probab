@@ -3,26 +3,27 @@
 package stat
 
 // Bonett-Seier test of Geary’s kurtosis.
-// Ref.: 
+// Ref.:
 
 import (
-	"code.google.com/p/probab/dst"
 	"sort"
+
+	"github.com/imbuba/probab/dst"
 )
 
 // Bonett performs Bonett-Seier test of Geary’s measure of kurtosis for normally distributed data vector.
 func Bonett(x []float64, alternative int) (kurt, z, pVal float64) {
-	// Arguments: 
+	// Arguments:
 	// x - vector of observations
 	// alternative - 0 = "twoSided", 1 = "less", 2 = "greater"
 	//
-	// Details: 
+	// Details:
 	// Under the hypothesis of normality, data should have Geary’s kurtosis equal to sqrt(2/pi) (0.7979).
 	// This test has such null hypothesis and is useful to detect a significant difference of Geary’s kurtosis
 	// in normally distributed data.
 	//
-	// Returns: 
-	// kurt - kurtosis estimator 
+	// Returns:
+	// kurt - kurtosis estimator
 	// z - its transformation
 	// pVal - the p-value for the test.
 

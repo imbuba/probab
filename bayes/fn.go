@@ -1,17 +1,19 @@
 // Copyright 2012 The Probab Authors. All rights reserved. See the LICENSE file.
-
+//
+//nolint:unused
 package bayes
 
 import (
-	fn "code.google.com/p/go-fn/fn"
 	"math"
+
+	fn "github.com/imbuba/go-fn/fn"
 )
 
 const π = float64(math.Pi)
 const ln2 = math.Ln2
 const lnSqrt2π = 0.918938533204672741780329736406 // log(sqrt(2*pi))
 const min64 = math.SmallestNonzeroFloat64         //   DBL_MIN
-const eps64 = 1.1102230246251565e-16              // DBL_EPSILON   
+const eps64 = 1.1102230246251565e-16              // DBL_EPSILON
 const maxExp = 1024.0                             // DBL_MAX_EXP
 const sqrt2 = math.Sqrt2
 
@@ -42,11 +44,11 @@ var erfc func(float64) float64 = math.Erfc
 var isNaN func(float64) bool = math.IsNaN
 var isInf func(float64, int) bool = math.IsInf
 
-// Functions imported from "code.google.com/p/go-fn/fn"
+// Functions imported from "github.com/imbuba/go-fn/fn"
 var lnB func(float64, float64) float64 = fn.LnB
 var lnΓ func(float64) float64 = fn.LnΓ
 
-//  sum returns the sum of the data vector.
+// sum returns the sum of the data vector.
 func sum(x []float64) float64 {
 	s := 0.0
 	for _, val := range x {

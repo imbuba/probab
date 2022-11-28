@@ -16,7 +16,7 @@ func logFn(x, n, y, beta0, beta1 float64) float64 {
 func LogisticPost(x, n, y []float64, beta0, beta1 float64) float64 {
 
 	val := 0.0
-	for i, _ := range y {
+	for i := range y {
 		val += logFn(x[i], n[i], y[i], beta0, beta1)
 	}
 	return val

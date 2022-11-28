@@ -2,17 +2,17 @@ package stat
 
 //Frequentist Confidence Interval for binomial parameter
 
-import "code.google.com/p/probab/dst"
+import "github.com/imbuba/probab/dst"
 
 // BinomPConfInt returns a one-sided frequentist Confidence Interval for binomial parameter estimated from a random sample.
 // Ref.: Hahn & Meeker (1991).
 func BinomPConfInt(n, k int64, alpha float64) (lo, hi float64) {
-	// Arguments: 
-	// 	n - sample size	
+	// Arguments:
+	// 	n - sample size
 	//	k - observed number of successes (p=n/k)
 	//	alpha - lervel of confidence
 	//
-	// Returns: 
+	// Returns:
 	//	lo	lower confidence limit
 	//	hi	upper confidence limit
 

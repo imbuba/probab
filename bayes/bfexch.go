@@ -7,7 +7,7 @@ package bayes
 
 func logF(k, eta float64, y, n []float64) []float64 {
 	v := make([]float64, len(y))
-	for i, _ := range v {
+	for i := range v {
 		v[i] = lnB(k*eta+y[i], k*(1-eta)+n[i]-y[i]) - lnB(k*eta, k*(1-eta))
 	}
 	return v
@@ -30,7 +30,7 @@ func BFExch(theta float64, y, n []float64, k float64) float64 {
 	sumY := 0.0
 	sumNY := 0.0
 	w := logF(k, eta, y, n)
-	for i, _ := range y {
+	for i := range y {
 		sum += w[i]
 		sumY += y[i]
 		sumNY += n[i] - y[i]

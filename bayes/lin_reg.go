@@ -3,8 +3,9 @@
 package bayes
 
 import (
-	"code.google.com/p/probab/dst"
 	"fmt"
+
+	"github.com/imbuba/probab/dst"
 	mx "github.com/skelterjohn/go.matrix"
 )
 
@@ -17,12 +18,12 @@ type KnownVarianceLRPosterior struct {
 }
 
 /*
- M is r x c, o x i
- Sigma is r x r, o x o
- Phi is c x c, i x i
+M is r x c, o x i
+Sigma is r x r, o x o
+Phi is c x c, i x i
 
- Sigma matches Y o x 1 output dimension
- Phi matches X i x 1 input dimension
+Sigma matches Y o x 1 output dimension
+Phi matches X i x 1 input dimension
 */
 func NewKnownVarianceLRPosterior(M, Sigma, Phi *mx.DenseMatrix) (this *KnownVarianceLRPosterior) {
 	if M.Rows() != Sigma.Rows() {
@@ -48,6 +49,7 @@ func NewKnownVarianceLRPosterior(M, Sigma, Phi *mx.DenseMatrix) (this *KnownVari
 	return
 }
 
+//nolint:errcheck
 func (this *KnownVarianceLRPosterior) Insert(x, y *mx.DenseMatrix) {
 	xxt, _ := x.TimesDense(x.Transpose())
 	this.XXt.Add(xxt)
@@ -55,6 +57,7 @@ func (this *KnownVarianceLRPosterior) Insert(x, y *mx.DenseMatrix) {
 	this.YXt.Add(yxt)
 }
 
+//nolint:errcheck
 func (this *KnownVarianceLRPosterior) Remove(x, y *mx.DenseMatrix) {
 	xxt, _ := x.TimesDense(x.Transpose())
 	this.XXt.Subtract(xxt)
@@ -104,9 +107,9 @@ func (this *KnownVarianceLRPosterior) Sample() (A *mx.DenseMatrix) {
 }
 
 /*
-	If Y ~ N(AX, Sigma, I)
-	and A ~ N(M, Sigma, Phi)
-	this returns a sampler for P(A|X,Y,Sigma,M,Phi)
+If Y ~ N(AX, Sigma, I)
+and A ~ N(M, Sigma, Phi)
+this returns a sampler for P(A|X,Y,Sigma,M,Phi)
 */
 func KnownVariancePosterior(Y, X, Sigma, M, Phi *mx.DenseMatrix) func() (A *mx.DenseMatrix) {
 	o := Y.Rows()

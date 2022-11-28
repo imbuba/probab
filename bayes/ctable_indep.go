@@ -2,13 +2,14 @@
 
 package bayes
 
-// Bayes factor against independence for a two-way contingency table assuming 
+// Bayes factor against independence for a two-way contingency table assuming
 // a "close to independence" alternative model.
 // Ref.: Albert (2009): 200 [bfindep()]
 
 import (
-	"code.google.com/p/probab/dst"
 	"fmt"
+
+	"github.com/imbuba/probab/dst"
 )
 
 // rdirichlet simulates a sample from a Dirichlet distribution.
@@ -27,9 +28,7 @@ func rdirichlet(m int, par []float64) [][]float64 { //// should accept vector, n
 
 	for i := range out { // nRows
 		dir := dst.DirichletNext(par)
-		for j, _ := range dir {
-			out[i][j] = dir[j]
-		}
+		copy(out[i], dir)
 	}
 	return out
 }
@@ -44,7 +43,7 @@ func ldirichlet(a [][]float64) []float64 {
 	return v
 }
 
-// FactCTableIndep returns a Bayes factor against independence for a two-way contingency table assuming a 
+// FactCTableIndep returns a Bayes factor against independence for a two-way contingency table assuming a
 // "close to independence" alternative model.
 func FactCTableIndep(y [][]float64, k float64, m int) (bf, nse float64) {
 	// Arguments:
@@ -63,18 +62,18 @@ func FactCTableIndep(y [][]float64, k float64, m int) (bf, nse float64) {
 		n += val
 	}
 
-	//d=dim(y); 
+	//d=dim(y);
 	yRows := len(y)
 	yCols := len(y[0])
 
 	yr1 := make([]float64, len(yr))
-	for i, _ := range yr1 {
+	for i := range yr1 {
 		yr1[i] = yr[i] + 1
 		//fmt.Println("yr1[i]: ", yr1[i])
 	}
 
 	yc1 := make([]float64, len(yc))
-	for i, _ := range yc1 {
+	for i := range yc1 {
 		yc1[i] = yc[i] + 1
 		//fmt.Println("yc1[i]: ", yc1[i])
 	}
@@ -103,8 +102,8 @@ func FactCTableIndep(y [][]float64, k float64, m int) (bf, nse float64) {
 	// fill in keta, ketaY
 	//keta=cbind(keta,k*etaA[,i]*etaB[,j])
 	col := 0
-	for i, _ := range y {
-		for j, _ := range y[0] {
+	for i := range y {
+		for j := range y[0] {
 			for h := range keta { // nRows
 				keta[h][col] = k * etaA[h][i] * etaB[h][j]
 				ketaY[h][col] = k*etaA[h][i]*etaB[h][j] + y[i][j]
@@ -116,24 +115,24 @@ func FactCTableIndep(y [][]float64, k float64, m int) (bf, nse float64) {
 	logint := ldirichlet(ketaY)
 	ld2 := ldirichlet(keta)
 
-	for i, _ := range keta { //m
+	for i := range keta { //m
 		logint[i] -= ld2[i]
 	}
 
-	for i, _ := range yr {
-		for j, _ := range logint { //m
+	for i := range yr {
+		for j := range logint { //m
 			logint[j] -= yr[i] * log(etaA[j][i])
 		}
 	}
 
-	for i, _ := range yc {
-		for j, _ := range logint { //m
+	for i := range yc {
+		for j := range logint { //m
 			logint[j] -= yc[i] * log(etaB[j][i])
 		}
 	}
 
 	zz := make([]float64, len(logint))
-	for i, _ := range logint {
+	for i := range logint {
 		zz[i] = exp(logint[i])
 	}
 

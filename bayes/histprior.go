@@ -19,7 +19,7 @@ func HistPrior(p, midpts, prob []float64) []float64 {
 		panic(" len(midpts) != len(prob)")
 	}
 
-	for i, _ := range midpts {
+	for i := range midpts {
 		d := midpts[1] - midpts[0]
 		if i > 0 {
 			if abs(midpts[i]-midpts[i-1]-d) > maxDiff {
@@ -32,11 +32,11 @@ func HistPrior(p, midpts, prob []float64) []float64 {
 	lo := make([]float64, len(midpts))
 	val := make([]float64, len(p))
 	binwidth := midpts[1] - midpts[0]
-	for i, _ := range midpts {
+	for i := range midpts {
 		lo[i] = midpts[i] - binwidth/2
 	}
 
-	for i, _ := range p {
+	for i := range p {
 		for j := 0; j < len(lo); j++ {
 			if p[i] >= lo[j] {
 				val[i] = prob[j]

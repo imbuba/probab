@@ -1,8 +1,10 @@
+//nolint:unused
 package dst
 
 import (
-	fn "code.google.com/p/go-fn/fn"
 	"math"
+
+	fn "github.com/imbuba/go-fn/fn"
 )
 
 const π = float64(math.Pi)
@@ -10,7 +12,7 @@ const Ln2 = math.Ln2
 const M_1_SQRT_2PI = 0.398942280401432677939946059934  // 1/sqrt(2pi)
 const M_LN_SQRT_2PI = 0.918938533204672741780329736406 // log(sqrt(2*pi))
 const min64 = math.SmallestNonzeroFloat64              //   DBL_MIN
-const eps64 = 1.1102230246251565e-16                   // DBL_EPSILON   
+const eps64 = 1.1102230246251565e-16                   // DBL_EPSILON
 const maxExp = 1024.0                                  // DBL_MAX_EXP
 const sqrt2 = math.Sqrt2
 
@@ -19,7 +21,6 @@ var NaN = math.NaN()
 var fZero float64 = float64(0.0)
 var fOne float64 = float64(1.0)
 var iZero int64 = int64(0)
-var iOne int64 = int64(1)
 
 var negInf float64 = math.Inf(-1)
 var posInf float64 = math.Inf(+1)
@@ -41,7 +42,7 @@ var erfc func(float64) float64 = math.Erfc
 var isNaN func(float64) bool = math.IsNaN
 var isInf func(float64, int) bool = math.IsInf
 
-// Functions imported from "code.google.com/p/go-fn/fn".
+// Functions imported from "github.com/imbuba/go-fn/fn".
 var Γ func(float64) float64 = fn.Γ
 var LnΓ func(float64) float64 = fn.LnΓ
 var Γr func(float64, float64) float64 = fn.Γr
@@ -106,7 +107,7 @@ func max(x, y float64) float64 {
 func maxFloat64(x []float64) float64 {
 	first := x[0]
 	if len(x) > 1 {
-		rest := maxFloat64(x[1:len(x)])
+		rest := maxFloat64(x[1:])
 		if rest > first {
 			first = rest
 		}
@@ -117,7 +118,7 @@ func maxFloat64(x []float64) float64 {
 func maxInt64(x []int64) int64 {
 	first := x[0]
 	if len(x) > 1 {
-		rest := maxInt64(x[1:len(x)])
+		rest := maxInt64(x[1:])
 		if rest > first {
 			first = rest
 		}
@@ -154,7 +155,7 @@ func expm1(x float64) float64 {
 		} else { // Taylor expansion, more accurate in this range
 			y = (x/2 + 1) * x
 		}
-		// Newton step for solving   log(1 + y) = x   for y 
+		// Newton step for solving   log(1 + y) = x   for y
 		// WARNING: does not work for y ~ -1: bug in 1.5.0
 		y -= (1 + y) * (math.Log1p(y) - x)
 	} //else

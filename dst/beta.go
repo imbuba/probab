@@ -2,16 +2,13 @@
 
 package dst
 
-// Beta distribution. 
+// Beta distribution.
 // Parameters:
 // α > 0:		shape
 // β > 0:		shape
 // Support:	x ∈ [0; 1]
 
-import (
-	"fmt"
-)
-
+//nolint:unused
 func bisect(x, p, a, b, xtol, ptol float64) float64 {
 	var x0, x1, px float64
 	cdf := BetaPDF(a, b)
@@ -80,11 +77,10 @@ func betaContinuedFraction(α, β, x float64) float64 {
 		}
 	}
 
-	panic(fmt.Sprintf("betaContinuedFraction(): α or β too big, or maxIter too small"))
-	return -1.00
+	panic("betaContinuedFraction(): α or β too big, or maxIter too small")
 }
 
-// BetaPDF returns the PDF of the Beta distribution. 
+// BetaPDF returns the PDF of the Beta distribution.
 func BetaPDF(α, β float64) func(x float64) float64 {
 	if α == 1 && β == 1 { // uniform case
 		return UniformPDF(0, 1)
@@ -100,7 +96,7 @@ func BetaPDF(α, β float64) func(x float64) float64 {
 	}
 }
 
-// BetaLnPDF returns the natural logarithm of the PDF of the Beta distribution. 
+// BetaLnPDF returns the natural logarithm of the PDF of the Beta distribution.
 func BetaLnPDF(α, β float64) func(x float64) float64 {
 	dα := []float64{α, β}
 	dirLnPDF := DirichletLnPDF(dα)
@@ -113,13 +109,13 @@ func BetaLnPDF(α, β float64) func(x float64) float64 {
 	}
 }
 
-// BetaPDFAt returns the value of PDF of Beta distribution at x. 
+// BetaPDFAt returns the value of PDF of Beta distribution at x.
 func BetaPDFAt(α, β, x float64) float64 {
 	pdf := BetaPDF(α, β)
 	return pdf(x)
 }
 
-// BetaCDF returns the CDF of the Beta distribution. 
+// BetaCDF returns the CDF of the Beta distribution.
 func BetaCDF(α, β float64) func(x float64) float64 {
 	if α == 1 && β == 1 { // uniform case
 		return UniformCDF(0, 1)
@@ -142,13 +138,13 @@ func BetaCDF(α, β float64) func(x float64) float64 {
 	}
 }
 
-// BetaCDFAt returns the value of CDF of the Beta distribution, at x. 
+// BetaCDFAt returns the value of CDF of the Beta distribution, at x.
 func BetaCDFAt(α, β, x float64) float64 {
 	cdf := BetaCDF(α, β)
 	return cdf(x)
 }
 
-// BetaQtl returns the inverse of the CDF (quantile) of the Beta distribution. 
+// BetaQtl returns the inverse of the CDF (quantile) of the Beta distribution.
 func BetaQtl(α, β float64) func(p float64) float64 {
 	// p: probability for which the quantile is evaluated
 	return func(p float64) float64 {
@@ -187,7 +183,7 @@ func BetaQtlFor(α, β, p float64) float64 {
 	return cdf(p)
 }
 
-// BetaNext returns random number drawn from the Beta distribution. 
+// BetaNext returns random number drawn from the Beta distribution.
 func BetaNext(α, β float64) float64 {
 	if α == 1 && β == 1 { // uniform case
 		return UniformNext(0, 1)
@@ -196,7 +192,7 @@ func BetaNext(α, β float64) float64 {
 	return DirichletNext(dα)[0]
 }
 
-// Beta returns the random number generator with  Beta distribution. 
+// Beta returns the random number generator with  Beta distribution.
 func Beta(α, β float64) func() float64 {
 	if α == 1 && β == 1 { // uniform case
 		return Uniform(0, 1)
@@ -204,7 +200,7 @@ func Beta(α, β float64) func() float64 {
 	return func() float64 { return BetaNext(α, β) }
 }
 
-// BetaMean returns the mean of the Beta distribution. 
+// BetaMean returns the mean of the Beta distribution.
 func BetaMean(α, β float64) (μ float64) {
 	if α == β { // symmetric case
 		μ = 0.5
@@ -214,12 +210,12 @@ func BetaMean(α, β float64) (μ float64) {
 	return
 }
 
-// BetaMedian returns the median of the Beta distribution. 
+// BetaMedian returns the median of the Beta distribution.
 func BetaMedian(α, β float64) (med float64) {
-	//The median of the beta distribution is the unique real number 
-	// for which the regularized incomplete beta function  = 0.5 . 
-	// There is no general closed-form expression for the median of the beta distribution 
-	// for arbitrary values of α and β. 
+	//The median of the beta distribution is the unique real number
+	// for which the regularized incomplete beta function  = 0.5 .
+	// There is no general closed-form expression for the median of the beta distribution
+	// for arbitrary values of α and β.
 	switch {
 	case α == β: // symmetric case
 		med = 0.5
@@ -232,22 +228,22 @@ func BetaMedian(α, β float64) (med float64) {
 	case α == 2 && β == 3:
 		med = 0.38572756813238945
 	case α <= 1 || β <= 1:
-		med = (α - 1/3) / (α + β - 2/3) // approximation
+		med = (α - 1.0/3) / (α + β - 2.0/3) // approximation
 	default:
 		panic("no closed form for median, sorry")
 	}
 	return
 }
 
-// BetaMedianApprox returns the approximate median of the Beta distribution. 
+// BetaMedianApprox returns the approximate median of the Beta distribution.
 func BetaMedianApprox(α, β float64) float64 {
 	if α <= 1 || β <= 1 {
 		return NaN
 	}
-	return (α - 1/3) / (α + β - 2/3)
+	return (α - 1.0/3) / (α + β - 2.0/3)
 }
 
-// BetaMode returns the mode of the Beta distribution. 
+// BetaMode returns the mode of the Beta distribution.
 func BetaMode(α, β float64) float64 {
 	if α <= 1 || β <= 1 {
 		return NaN
@@ -255,18 +251,18 @@ func BetaMode(α, β float64) float64 {
 	return (α - 1) / (α + β - 2) // if α < 1 and β < 1, this is the anti-mode
 }
 
-// BetaVar returns the variance of the Beta distribution. 
+// BetaVar returns the variance of the Beta distribution.
 func BetaVar(α, β float64) float64 {
 	return (α * β) / ((α + β) * (α + β) * (α + β + 1))
 }
 
-// BetaStd returns the standard deviation of the Beta distribution. 
+// BetaStd returns the standard deviation of the Beta distribution.
 func BetaStd(α, β float64) float64 {
 	v := (α * β) / ((α + β) * (α + β) * (α + β + 1))
 	return sqrt(v)
 }
 
-// BetaSkew returns the skewness of the Beta distribution. 
+// BetaSkew returns the skewness of the Beta distribution.
 func BetaSkew(α, β float64) (s float64) {
 
 	if α == β { // symmetric case
@@ -279,15 +275,15 @@ func BetaSkew(α, β float64) (s float64) {
 	return
 }
 
-// BetaExKurt returns the excess kurtosis of the Beta distribution. 
+// BetaExKurt returns the excess kurtosis of the Beta distribution.
 func BetaExKurt(α, β float64) float64 {
 	num := 6 * ((α-β)*(α-β)*(α+β+1) - α*β*(α+β+2))
 	den := α * β * (α + β + 2) * (α + β + 2)
 	return num / den
 }
 
-// BetaReparamMeanStd returns the parameters α, β of the Beta distribution calculated from desired mean and standard deviation. 
-// To be used to reparametrize the Beta distribution. 
+// BetaReparamMeanStd returns the parameters α, β of the Beta distribution calculated from desired mean and standard deviation.
+// To be used to reparametrize the Beta distribution.
 func BetaReparamMeanStd(μ, σ float64) (α, β float64) {
 	// http://linkage.rockefeller.edu/pawe3d/help/Beta-distribution.html
 	if σ*σ >= μ*(1-μ) {
@@ -298,15 +294,15 @@ func BetaReparamMeanStd(μ, σ float64) (α, β float64) {
 	return
 }
 
-// BetaReparamModStd returns the parameters α, β of the Beta distribution calculated from modus and standard deviation. 
-// To be used to reparametrize the Beta distribution. 
+// BetaReparamModStd returns the parameters α, β of the Beta distribution calculated from modus and standard deviation.
+// To be used to reparametrize the Beta distribution.
 // To be implemented
 /* func BetaReparamModStd(μ, σ float64) (α, β float64) {
 	if σ*σ >= μ*(1-μ) {
 			return NaN
 	}
-	α = 
-	β = 
+	α =
+	β =
 	return
 }
 
@@ -322,7 +318,7 @@ func BetaReparamMeanStd(μ, σ float64) (α, β float64) {
 	(α + β) * (α + β) =(α*α+2*α*β+β*β)
 		(α*α+2*α*β+β*β) * (α + β + 1) = (α*α*α+2*α*α*β+α*β*β+α*α*β+2*α*β*β+β*β*β+ α*α+2*α*β+β*β) =
 			(σ*σ)*... = (α*α*α*σ*σ+2*α*α*β*σ*σ+α*β*β*σ*σ+α*α*β*σ*σ+2*α*β*β*σ*σ+β*β*β*σ*σ+ α*α*σ*σ+2*α*β*σ*σ+β*β*σ*σ)
-(α*α*α*σ*σ+2*α*α*β*σ*σ+α*β*β*σ*σ+α*α*β*σ*σ+2*α*β*β*σ*σ+β*β*β*σ*σ+ α*α*σ*σ+2*α*β*σ*σ+β*β*σ*σ -α*β) 
+(α*α*α*σ*σ+2*α*α*β*σ*σ+α*β*β*σ*σ+α*α*β*σ*σ+2*α*β*β*σ*σ+β*β*β*σ*σ+ α*α*σ*σ+2*α*β*σ*σ+β*β*σ*σ -α*β)
 +2*α*α*β*σ*σ  +α*β*β*σ*σ  +α*α*β*σ*σ  +2*α*β*β*σ*σ +β*β*β*σ*σ +2*α*β*σ*σ  +β*β*σ*σ -α*β)+α*α*α*σ*σ+ α*α*σ*σ=0
 
 β*β*β*σ*σ +  β*β*(α*σ*σ+2*α*σ*σ+σ*σ) +   β*(+2*α*α*σ*σ +α*α*σ*σ+2*α*σ*σ -α)+α*α*α*σ*σ+ α*α*σ*σ=0
@@ -343,8 +339,8 @@ mod*(α + β - 2)=(α - 1)
 mod=(α - 1)/(α + β - 2)
 mod=((μ*(μ*(1-μ)/(σ*σ)-1)) - 1)/((μ*(μ*(1-μ)/(σ*σ)-1)) + (1-μ)*(μ*(1-μ)/(σ*σ)-1) - 2)
 mod=((A) - 1)/((μ*(μ*(1-μ)/(σ*σ)-1)) + (1-μ)*(μ*(1-μ)/(σ*σ)-1) - 2)
-A = μ*(μ*(1-μ)/(σ*σ)-1) = (μ*μ*(1-μ)/(σ*σ)-μ) = (μ*μ-μ*μ*μ)/(σ*σ-μ) 
-B = 
+A = μ*(μ*(1-μ)/(σ*σ)-1) = (μ*μ*(1-μ)/(σ*σ)-μ) = (μ*μ-μ*μ*μ)/(σ*σ-μ)
+B =
 
 
 ...

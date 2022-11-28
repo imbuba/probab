@@ -6,22 +6,23 @@ package stat
 // Ref.: Anscombe & Glynn (1983).
 
 import (
-	"code.google.com/p/probab/dst"
 	"sort"
+
+	"github.com/imbuba/probab/dst"
 )
 
 // Anscombe performs Anscombe-Glynn test of kurtosis for normally distributed data vector.
 func Anscombe(x []float64, alternative int) (kurt, z, pVal float64) {
-	// Arguments: 
+	// Arguments:
 	// x - vector of observations
 	// alternative - 0 = "twoSided", 1 = "less", 2 = "greater"
 	//
-	// Details: 
+	// Details:
 	// Under the hypothesis of normality, data should have kurtosis equal to 3. This test has such null
 	// hypothesis and is useful to detect a significant difference of kurtosis in normally distributed data.
 	//
-	// Returns: 
-	// kurt - kurtosis estimator 
+	// Returns:
+	// kurt - kurtosis estimator
 	// z - its transformation
 	// pVal - the p-value for the test.
 

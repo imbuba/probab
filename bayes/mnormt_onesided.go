@@ -6,12 +6,12 @@ package bayes
 // Ref.: Albert (2009): 184 [mnormt.onesided()]
 
 import (
-	"code.google.com/p/probab/dst"
+	"github.com/imbuba/probab/dst"
 )
 
 // NormMeanTestOneSided does a Bayesian test of the hypothesis that a normal mean is less than or equal to a specified value.
 func NormMeanTestOneSided(m0, priMean, priSD, smpMean float64, smpSize int, popSd float64) (bf, priOdds, postOdds, postH float64) {
-	// 
+	//
 	// Arguments
 	// m0 - value of the normal mean to be tested
 	// priMean - mean of the normal prior distribution
@@ -19,14 +19,14 @@ func NormMeanTestOneSided(m0, priMean, priSD, smpMean float64, smpSize int, popS
 	// smpMean - sample mean
 	// smpSize - sample size
 	// popSd - known value of the population standard deviation
-	// 
+	//
 	// Returns
 	// bf Bayes factor in support of the null hypothesis
 	// priOdds prior odds of the null hypothesis
 	// postOdds posterior odds of the null hypothesis
 	// postH posterior probability of the null hypothesis
-	// 
-	// 
+	//
+	//
 	n := float64(smpSize)
 	priVar := priSD * priSD
 	priH := dst.NormalCDFAt(priMean, priSD, m0)

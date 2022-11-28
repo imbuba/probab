@@ -9,13 +9,14 @@
 // Approximate each posterior distribution with normal distribution having the same mean and variance as the beta.
 // The posterior of pid = pi1 - pi2 is approximately normal(mdpost, vardpost), where:
 // mdpost = a1post/(a1post+b1post) - a2post/(a2post+b2post), and
-// vardpost = a1post*b1post/math.Sqrt(a1post+b1post)*(a1post+b1post+1)  +  a2post*b2post/math.Sqrt(a2post+b2post)*(a2post+b2post+1) 
+// vardpost = a1post*b1post/math.Sqrt(a1post+b1post)*(a1post+b1post+1)  +  a2post*b2post/math.Sqrt(a2post+b2post)*(a2post+b2post+1)
 
 package bayes
 
 import (
-	. "code.google.com/p/probab/dst"
 	"math"
+
+	. "github.com/imbuba/probab/dst"
 )
 
 // Mean of posterior distribution of unknown difference of binomial proportions, approximated by Normal distribution

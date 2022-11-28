@@ -6,7 +6,7 @@ package bayes
 // Ref.: Albert (2009)
 
 import (
-	"code.google.com/p/probab/dst"
+	"github.com/imbuba/probab/dst"
 )
 
 func rigamma(shape, rate float64) float64 {
@@ -87,7 +87,7 @@ func NormPostSimNoPrior(data []float64, m int) (postMu, postS2 []float64) {
 	postS2 = make([]float64, m)
 	postMu = make([]float64, m)
 
-	for i, _ := range postMu {
+	for i := range postMu {
 		postS2[i] = s / dst.ChiSquareNext(int64(n)-1)
 		sd := sqrt(postS2[i]) / sqrt(float64(n))
 		postMu[i] = dst.NormalNext(xbar, sd)

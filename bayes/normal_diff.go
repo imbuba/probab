@@ -4,8 +4,9 @@
 package bayes
 
 import (
-	. "code.google.com/p/probab/dst"
 	"math"
+
+	. "github.com/imbuba/probab/dst"
 )
 
 // KNOWN variances, and NORMAL priors
@@ -61,6 +62,8 @@ func NormalMuDiffQtlNPriKn(nObs1, nObs2 int, ȳ1, ȳ2, σ1, σ2, μ1Pri, σ1Pri,
 // Variance estimate from single sample from Normal distribution with unknown variance
 // Bolstad 2007 (2e): 246
 // untested ...
+//
+//nolint:unused
 func varest(y []float64, nObs int) float64 {
 	n := float64(nObs)
 	mean := 0.0
@@ -77,7 +80,7 @@ func varest(y []float64, nObs int) float64 {
 
 // Satterthwaite's adjusted degrees of freedom
 // Bolstad 2007 (2e): 247.
-// Satterthwaite, F.E. 1941: Synthesis of variance.  Psychometrika, 6 (5), pp. 309-316. 
+// Satterthwaite, F.E. 1941: Synthesis of variance.  Psychometrika, 6 (5), pp. 309-316.
 // untested ...
 func satterthwaitenu(estvar1 float64, nObs1 int, estvar2 float64, nObs2 int) float64 {
 	var nu float64
@@ -97,7 +100,7 @@ func satterthwaitenu(estvar1 float64, nObs1 int, estvar2 float64, nObs2 int) flo
 	return nu
 }
 
-// Quantile of the difference of two means (μ1-μ2) of Normal distributions with UNKNOWN variances (Behrens-Fisher problem), and NORMAL priors 
+// Quantile of the difference of two means (μ1-μ2) of Normal distributions with UNKNOWN variances (Behrens-Fisher problem), and NORMAL priors
 // Bolstad 2007:245-246
 // untested ...
 func NormalMuDiffQtlNPriUn(nObs1, nObs2 int, ȳ1, ȳ2, s1, s2, μ1Pri, σ1Pri, μ2Pri, σ2Pri, p float64) func(p float64) float64 {
@@ -123,7 +126,7 @@ func NormalMuDiffQtlNPriUn(nObs1, nObs2 int, ȳ1, ȳ2, s1, s2, μ1Pri, σ1Pri, �
 	}
 }
 
-// Credible interval of the difference of two means (μ1-μ2) of Normal distributions with UNKNOWN variances (Behrens-Fisher problem), and NORMAL priors 
+// Credible interval of the difference of two means (μ1-μ2) of Normal distributions with UNKNOWN variances (Behrens-Fisher problem), and NORMAL priors
 // Bolstad 2007:245-246
 // untested ...
 func NormalMuDiffCrINPriUn(nObs1, nObs2 int, ȳ1, ȳ2, s1, s2, μ1Pri, σ1Pri, μ2Pri, σ2Pri, α float64) func(α float64) (lo, hi float64) {

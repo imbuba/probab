@@ -4,12 +4,12 @@
 package bayes
 
 import (
-	. "code.google.com/p/probab/dst"
-	"fmt"
 	"math"
+
+	. "github.com/imbuba/probab/dst"
 )
 
-// PMF of the posterior distribution of unknown Normal μ, with KNOWN σ, and discrete prior, for single observation. 
+// PMF of the posterior distribution of unknown Normal μ, with KNOWN σ, and discrete prior, for single observation.
 // Bolstad 2007 (2e): 200-201.
 func NormMuSinglePMFDPri(y, σ float64, μ []float64, μPri []float64) (post []float64) {
 	// y	single observation taken from Normal distribution
@@ -18,7 +18,7 @@ func NormMuSinglePMFDPri(y, σ float64, μ []float64, μPri []float64) (post []f
 	// μPri	array of associated prior probability masses
 	nPoss := len(μ)
 	if len(μPri) != nPoss {
-		panic(fmt.Sprintf("len(μ) != len(μPri)"))
+		panic("len(μ) != len(μPri)")
 	}
 	post = make([]float64, nPoss)
 	sum := 0.0
@@ -44,7 +44,7 @@ func NormMuPMFDPri(nObs int, ȳ, σ float64, μ []float64, μPri []float64) (pos
 	// μPri		array of associated prior probability masses
 	nPoss := len(μ) // number of possible values of the parameter μ
 	if len(μPri) != nPoss {
-		panic(fmt.Sprintf("len(μ) != len(μPri)"))
+		panic("len(μ) != len(μPri)")
 	}
 	post = make([]float64, nPoss)
 	n := float64(nObs)
@@ -62,7 +62,7 @@ func NormMuPMFDPri(nObs int, ȳ, σ float64, μ []float64, μPri []float64) (pos
 	return
 }
 
-// Posterior mean for unknown Normal μ, with KNOWN σ. 
+// Posterior mean for unknown Normal μ, with KNOWN σ.
 // Bolstad 2007 (2e): 209, eq. 11.6
 func NormMuPostMean(nObs int, ȳ, σ, μPri, σPri float64) float64 {
 	// μPri		prior mean
@@ -76,7 +76,7 @@ func NormMuPostMean(nObs int, ȳ, σ, μPri, σPri float64) float64 {
 	return (μPost)
 }
 
-// Posterior standard deviation for unknown Normal μ, with KNOWN σ. 
+// Posterior standard deviation for unknown Normal μ, with KNOWN σ.
 // Bolstad 2007 (2e): 209, eq. 11.5
 func NormMuPostStd(nObs int, σ, μPri, σPri float64) float64 {
 	// μPri		prior mean
@@ -113,7 +113,7 @@ func NormMuQtlFPri(nObs int, ȳ, σ, p float64) float64 {
 	// p		probability for which the quantile will be returned
 
 	if σ <= 0 {
-		panic(fmt.Sprintf("Prior standard deviation must be greater than zero"))
+		panic("Prior standard deviation must be greater than zero")
 	}
 
 	n := float64(nObs)
@@ -134,7 +134,7 @@ func NormMuSingleQtlNPri(y, σ, μPri, σPri, p float64) float64 {
 	// p		probability for which the quantile will be returned
 	// untested ...
 	if σ <= 0 {
-		panic(fmt.Sprintf("Prior standard deviation must be greater than zero"))
+		panic("Prior standard deviation must be greater than zero")
 	}
 
 	σ2 := σ * σ

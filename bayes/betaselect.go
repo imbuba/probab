@@ -6,17 +6,17 @@ package bayes
 // Ref.: Albert (2009)
 
 import (
-	dst "code.google.com/p/probab/dst"
+	dst "github.com/imbuba/probab/dst"
 )
 
-// betaprior1 returns the prior mean m given a beta(k*m, K*(1-m)) prior 	
-// where the pth quantile is given by x. 
+// betaprior1 returns the prior mean m given a beta(k*m, K*(1-m)) prior
+// where the pth quantile is given by x.
 func betaprior1(k, x, p float64) float64 {
 	var m0, p0 float64
 	mLo := 0.0
 	mHi := 1.0
 	rep := true
-	for rep == true {
+	for rep {
 		m0 = (mLo + mHi) / 2.0
 		p0 = dst.BetaCDFAt(k*m0, k*(1-m0), x)
 		if p0 < p {
@@ -31,7 +31,7 @@ func betaprior1(k, x, p float64) float64 {
 	return m0
 }
 
-//  BetaFromQtls finds the shape parameters of a beta density that matches knowledge of two quantiles of the distribution.
+// BetaFromQtls finds the shape parameters of a beta density that matches knowledge of two quantiles of the distribution.
 func BetaFromQtls(p1, x1, p2, x2 float64) (alpha, beta float64) {
 	// Arguments:
 	// p1	first probability
@@ -52,7 +52,7 @@ func BetaFromQtls(p1, x1, p2, x2 float64) (alpha, beta float64) {
 	}
 
 	prob2 := make([]float64, 100)
-	for i, _ := range prob2 {
+	for i := range prob2 {
 		prob2[i] = dst.BetaCDFAt(k[i]*m[i], k[i]*(1-m[i]), x2)
 	}
 

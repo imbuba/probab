@@ -14,6 +14,8 @@ func dsign(a, b float64) float64 {
 }
 
 // just for testing purposes
+//
+//nolint:unused
 func parab(x float64) float64 {
 	a := 1.0 / 3.0
 	return (x - a) * (x - a)
@@ -25,9 +27,13 @@ func parab(x float64) float64 {
 // ax    left endpoint of initial interval
 // bx    right endpoint of initial interval
 // f     function subprogram which evaluates  f(x)  for any  x
-//	 in the interval  (ax,bx)
+//
+//	in the interval  (ax,bx)
+//
 // tol   desired length of the interval of uncertainty of the final
-//	 result
+//
+//	result
+//
 // output:
 // abcissa approximating the point where  f  attains a minimum.
 // The method used is a combination of  golden  section  search  and
@@ -36,7 +42,9 @@ func parab(x float64) float64 {
 // derivative which is positive at the minimum (which is not  at  ax  or
 // bx),  then  convergence  is  superlinear, and usually of the order of
 // about  1.324....
-//     the function  f  is never evaluated at two points closer together
+//
+//	the function  f  is never evaluated at two points closer together
+//
 // than  eps*abs(fmin) + (tol/3), where eps is  approximately the square
 // root  of  the  relative  machine  precision.   if   f   is a unimodal
 // function and the computed values of   f   are  always  unimodal  when
@@ -139,7 +147,7 @@ func fmin(f func(float64) float64, ax, bx, tol float64) float64 {
 		}
 
 		// f must not be evaluated too close to x
-		//   50 
+		//   50
 		if math.Abs(d) >= tol1 {
 			u = x + d
 		}

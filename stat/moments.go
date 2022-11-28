@@ -41,6 +41,7 @@ func Kurt(x []float64) float64 {
 }
 
 // Moment returns moment of specified order of the data vector.
+//nolint:unused
 func moment(x []float64, order int, central, absolute bool) float64 {
 	n := float64(len(x))
 	if order < 1 {
@@ -58,7 +59,7 @@ func moment(x []float64, order int, central, absolute bool) float64 {
 
 // Geary returns an estimator of Geary’s measure of kurtosis.
 func Geary(x []float64) float64 {
-	// The Geary’s kurtosis is computed by dividing average difference between observation 
+	// The Geary’s kurtosis is computed by dividing average difference between observation
 	// and the mean by standard deviation of the sample.
 	n := float64(len(x))
 	d2 := diffMean(x)

@@ -6,21 +6,21 @@ package stat
 // Ref.: Jarque & Bera (1980).
 
 import (
-	"code.google.com/p/probab/dst"
+	"github.com/imbuba/probab/dst"
 )
 
-// Jarque performs performs the Jarque-Bera test on the given data sample to determine if the data are 
+// Jarque performs performs the Jarque-Bera test on the given data sample to determine if the data are
 // sample drawn from a normal population.
 func Jarque(x []float64) (jb, pVal float64) {
-	// Arguments: 
+	// Arguments:
 	// x - vector of observations
 	//
-	// Details: 
-	// Under the hypothesis of normality, data should be symmetrical (i.e. skewness should be equal to zero) 
+	// Details:
+	// Under the hypothesis of normality, data should be symmetrical (i.e. skewness should be equal to zero)
 	// and have skewness chose to three. The Jarque-Bera statistic is chi-square distributed with two degrees of freedom.
 	// Alternative hypothesis is "greater".
 	//
-	// Returns: 
+	// Returns:
 	// jb - the Jarque-Bera statistic
 	// pVal - the p-value for the test.
 

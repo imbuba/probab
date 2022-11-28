@@ -5,7 +5,7 @@ package bayes
 // Posterior for normal sampling and a mixture of normals prior
 
 import (
-	"code.google.com/p/probab/dst"
+	"github.com/imbuba/probab/dst"
 )
 
 // NormalNormalMix returns the parameters and mixing probabilities for a normal sampling problem, variance known,
@@ -23,32 +23,32 @@ func NormalNormalMix(probs, priorMean, priorVar []float64, y, sigma2 float64) (p
 	// postMean  - vector of variances  for a normal component of the posterior
 
 	postPrecision := make([]float64, len(probs))
-	for i, _ := range probs {
+	for i := range probs {
 		postPrecision[i] = 1/priorVar[i] + 1/sigma2
 	}
 
 	postVar = make([]float64, len(probs))
-	for i, _ := range probs {
+	for i := range probs {
 		postVar[i] = 1 / postPrecision[i]
 	}
 
 	postMean = make([]float64, len(probs))
-	for i, _ := range probs {
+	for i := range probs {
 		postMean[i] = (y/sigma2 + priorMean[i]/priorVar[i]) / postPrecision[i]
 	}
 
 	mProb := make([]float64, len(probs))
-	for i, _ := range probs {
+	for i := range probs {
 		mProb[i] = dst.NormalPDFAt(priorMean[i], sqrt(sigma2+priorVar[i]), y)
 	}
 
 	prod := make([]float64, len(probs))
-	for i, _ := range probs {
+	for i := range probs {
 		prod[i] = probs[i] * mProb[i]
 	}
 
 	postProbs = make([]float64, len(probs))
-	for i, _ := range probs {
+	for i := range probs {
 		postProbs[i] = probs[i] * mProb[i] / sum(prod)
 	}
 

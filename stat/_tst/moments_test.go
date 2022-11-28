@@ -1,9 +1,10 @@
 package stat
 
 import (
-	"code.google.com/p/probab/dst"
 	"fmt"
 	"testing"
+
+	"github.com/imbuba/probab/dst"
 )
 
 // Test against R:moments

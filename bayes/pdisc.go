@@ -4,7 +4,7 @@ package bayes
 
 // PropDisc returns the posterior distribution for a proportion for a discrete prior distribution.
 func PropDisc(p, prior []float64, succ, fail int) []float64 {
-	//Arguments: 
+	//Arguments:
 	// p vector of proportion values
 	// prior vector of prior probabilities
 	// succ number of successes
@@ -18,7 +18,7 @@ func PropDisc(p, prior []float64, succ, fail int) []float64 {
 	mx := -1e99
 
 	p1 := make([]float64, len(p))
-	for i, _ := range p {
+	for i := range p {
 		if p[i] == 0 || p[i] == 1 {
 			p1[i] = 0.5
 		} else {
@@ -27,11 +27,11 @@ func PropDisc(p, prior []float64, succ, fail int) []float64 {
 	}
 
 	like := make([]float64, len(p))
-	for i, _ := range like {
+	for i := range like {
 		like[i] = s*log(p1[i]) + f*log(1-p1[i])
 	}
 
-	for i, _ := range like {
+	for i := range like {
 		if !(p[i] > 0 && p[i] < 1) {
 			if (p[i] == 0 && s > 0) || (p[i] == 1 && f > 0) {
 				like[i] = nan
@@ -39,7 +39,7 @@ func PropDisc(p, prior []float64, succ, fail int) []float64 {
 		}
 	}
 
-	for i, _ := range like {
+	for i := range like {
 		if like[i] > mx {
 			mx = like[i]
 		}
@@ -51,18 +51,18 @@ func PropDisc(p, prior []float64, succ, fail int) []float64 {
 
 	//product=like*prior
 	product := make([]float64, len(p))
-	for i, _ := range product {
+	for i := range product {
 		product[i] = like[i] * prior[i]
 	}
 
 	//post=product/sum(product)
 	sum := 0.0
-	for i, _ := range product {
+	for i := range product {
 		sum += product[i]
 	}
 
 	post := make([]float64, len(product))
-	for i, _ := range product {
+	for i := range product {
 		post[i] = product[i] / sum
 	}
 	return post

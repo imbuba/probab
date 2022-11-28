@@ -22,7 +22,7 @@ func PoissGamExch(theta1, theta2, z0 float64, y, e []float64) float64 {
 	mu := exp(theta2)
 	beta := alpha / mu
 	val := 0.0
-	for i, _ := range y {
+	for i := range y {
 		val += logG(y[i], e[i], alpha, beta)
 	}
 	val += log(alpha) - 2*log(alpha+z0)

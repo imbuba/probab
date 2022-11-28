@@ -7,8 +7,7 @@ package bayes
 // http://en.wikipedia.org/wiki/Dirichletdistribution#Conjugatetomultinomial
 
 import (
-	. "code.google.com/p/probab/dst"
-	"fmt"
+	. "github.com/imbuba/probab/dst"
 )
 
 // Posterior PDF, Dirichlet prior
@@ -24,7 +23,7 @@ func MultinomPiPDFDirPri(α, x []float64) float64 {
 	}
 
 	if len(α) != len(x) {
-		panic(fmt.Sprintf("len(α) != len(x)"))
+		panic("len(α) != len(x)")
 	}
 
 	for i := 0; i < len(x); i++ {

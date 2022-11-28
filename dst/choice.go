@@ -1,7 +1,5 @@
 package dst
 
-import ()
-
 func ChoicePMF(θ []float64) func(i int64) float64 {
 	return func(i int64) float64 {
 		return θ[i]
@@ -39,7 +37,7 @@ func LogChoiceNext(lws []float64) int64 {
 
 func LogChoice(lws []float64) func() int64 {
 	max := lws[0]
-	for _, lw := range lws[1:len(lws)] {
+	for _, lw := range lws[1:] {
 		if lw > max {
 			max = lw
 		}

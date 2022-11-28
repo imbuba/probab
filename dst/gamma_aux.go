@@ -1,8 +1,9 @@
 // Copyright 2012 The Probab Authors. All rights reserved. See the LICENSE file.
-
+//
+//nolint:unused
 package dst
 
-// Gamma distribution, helper functions. 
+// Gamma distribution, helper functions.
 
 // Scalefactor:= (2^32)^8 = 2^256 = 1.157921e+77
 const scalefactor = 1.157920892373162e+77
@@ -87,7 +88,7 @@ func lgammafn(a float64) float64 {
 func lgamma1p(a float64) float64 {
 	const eulers_const = 0.5772156649015328606065120900824024
 
-	// coeffs[i] holds (zeta(i+2)-1)/(i+2) , i = 0:(N-1), N = 40 
+	// coeffs[i] holds (zeta(i+2)-1)/(i+2) , i = 0:(N-1), N = 40
 	const N = 40
 	var coeffs = [40]float64{
 		0.3224670334241132182362075833230126e-0, // = (zeta(2)-1)/2
@@ -139,8 +140,8 @@ func lgamma1p(a float64) float64 {
 		return lgammafn(a + 1)
 	}
 
-	// Abramowitz & Stegun 6.1.33 : 
-	// for |x| < 2, <==> log(gamma(1+x)) = 
+	// Abramowitz & Stegun 6.1.33 :
+	// for |x| < 2, <==> log(gamma(1+x)) =
 	// -(log(1+x) - x) - gamma*x + x^2 * \sum_{n=0}^\infty c_n (-x)^n
 	// where c_n := (Zeta(n+2) - 1)/(n+2)  = coeffs[n]
 	//
@@ -227,7 +228,6 @@ func pd_upper_series(x, y float64) float64 {
 //  ~=  (y / d) * [1 +  (1-y)/d +  O( ((1-y)/d)^2 ) ]
 func pd_lower_cf(y, d float64) float64 {
 	var f, of, f0, c2, c3, c4, a1, b1, a2, b2 float64
-	f = 0.0
 	max_it := 200000
 
 	if y == 0 {
@@ -298,7 +298,6 @@ func pd_lower_cf(y, d float64) float64 {
 	}
 
 	panic("NON-convergence in pgamma()'s pd_lower_cf() ")
-	return f // should not happen ... 
 }
 
 func pd_lower_series(lambda, y float64) float64 {
@@ -369,7 +368,6 @@ func dpnorm(x, lp float64) float64 {
 		d := ZPDFAt(x)
 		return d / exp(lp)
 	}
-	return NaN // should not happen
 }
 
 // Asymptotic expansion to calculate the probability that Poisson variate
@@ -455,7 +453,6 @@ func ppois_asymp(lambda, x float64, log_p bool) float64 {
 
 		return np + f*nd
 	}
-	return NaN // should not happen
 }
 
 func dpois_wrap(x_plus_1, lambda float64) float64 {
@@ -507,7 +504,7 @@ func dpois_raw(x, lambda float64) float64 {
 }
 
 func pgamma_raw(x, shape float64) float64 {
-	// Here, assume that  (x,shape) are not NA  &  shape > 0 . 
+	// Here, assume that  (x,shape) are not NA  &  shape > 0 .
 
 	var res, sum float64
 
@@ -547,7 +544,7 @@ func pgamma_raw(x, shape float64) float64 {
 	}
 
 	// We lose a fair amount of accuracy to underflow in the cases
-	// where the final result is very close to min64.	
+	// where the final result is very close to min64.
 	//  In those cases, simply redo via logarithm.
 	if res < min64/eps64 {
 		return exp(pgamma_raw_ln(shape, x))

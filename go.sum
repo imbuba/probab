@@ -1,0 +1,4 @@
+github.com/imbuba/go-fn v0.0.0-20221128023109-be196773da26 h1:3onT6sSA36TyD1gc3eXVPQQ/Vq/vjWGm1gw1TRl29vE=
+github.com/imbuba/go-fn v0.0.0-20221128023109-be196773da26/go.mod h1:D+DYiweuVLGBlAozg0P+TrDDcwchd/KIVQVwi16zGME=
+github.com/skelterjohn/go.matrix v0.0.0-20130517144113-daa59528eefd h1:+ZLYzP9SYC3WU9buyb9H0l9DQxqVFOCkDG8QnNBMAlA=
+github.com/skelterjohn/go.matrix v0.0.0-20130517144113-daa59528eefd/go.mod h1:x7ui0Rh4QxcWEOgIfa3cr9q4W/wyLTDdzISxBmLVeX8=
